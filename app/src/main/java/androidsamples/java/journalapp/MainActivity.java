@@ -1,5 +1,6 @@
 package androidsamples.java.journalapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -21,5 +22,16 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddEntry.class);
         Log.d(TAG, "Launching Add Entry");
         startActivityForResult(intent, ADD_ENTRY_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_ENTRY_REQUEST_CODE && resultCode == RESULT_OK) {
+            if (data != null) {
+                Log.d(TAG, "Title: " + data.getStringExtra(AddEntry.KEY_TITLE));
+                Log.d(TAG, "Duration: " + data.getIntExtra(AddEntry.KEY_DURATION, 0));
+            }
+        }
     }
 }
