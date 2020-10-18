@@ -7,7 +7,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "journal_entry")
+@Entity(tableName = "journal_table")
 public class JournalEntry {
     @PrimaryKey
     @NonNull
