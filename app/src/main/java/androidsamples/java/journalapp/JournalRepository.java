@@ -1,24 +1,28 @@
 package androidsamples.java.journalapp;
 
 import android.content.Context;
-import android.os.AsyncTask;
 
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Room;
 
 public class JournalRepository {
     private static final String DATABASE_NAME = "journal_table";
-    private final JournalEntryDao mJournalEntryDao;
 
     private static JournalRepository sInstance;
+
+    private final JournalEntryDao mJournalEntryDao;
+    private final Executor mExecutor;
 
     public JournalRepository(Context context) {
         JournalRoomDatabase db = Room.databaseBuilder(context.getApplicationContext(),
                 JournalRoomDatabase.class,
                 DATABASE_NAME).build();
         mJournalEntryDao = db.journalEntryDao();
+        mExecutor = Executors.newSingleThreadExecutor();
     }
 
     public static void init(Context context) {
@@ -33,24 +37,10 @@ public class JournalRepository {
     }
 
     public void insert(JournalEntry entry) {
-        new insertAsyncTask(mJournalEntryDao).execute(entry);
+        mExecutor.execute(() -> mJournalEntryDao.insert(entry));
     }
 
     public LiveData<List<JournalEntry>> getAllEntries() {
         return mJournalEntryDao.getAllEntries();
-    }
-
-    private static class insertAsyncTask extends AsyncTask<JournalEntry, Void, Void> {
-        private final JournalEntryDao mAsyncTaskDao;
-
-        public insertAsyncTask(JournalEntryDao dao) {
-            mAsyncTaskDao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(JournalEntry... journalEntries) {
-            mAsyncTaskDao.insert(journalEntries[0]);
-            return null;
-        }
     }
 }

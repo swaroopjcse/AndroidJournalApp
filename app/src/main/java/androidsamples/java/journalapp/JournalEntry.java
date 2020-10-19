@@ -10,8 +10,9 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "journal_table")
 public class JournalEntry {
     @PrimaryKey
+    @ColumnInfo(name = "id")
     @NonNull
-    private final UUID mUid;
+    private UUID mUid;
 
     @ColumnInfo(name = "title")
     private String mTitle;
@@ -25,13 +26,13 @@ public class JournalEntry {
         mDuration = duration;
     }
 
-    // getters and setters
     @NonNull
     public UUID getUid() {
         return mUid;
     }
 
-    public void setUid(UUID id) {
+    public void setUid(@NonNull UUID id) {
+        mUid = id;
     }
 
     @NonNull

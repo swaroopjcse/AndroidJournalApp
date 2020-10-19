@@ -12,9 +12,6 @@ public interface JournalEntryDao {
     @Insert
     void insert(JournalEntry entry);
 
-    @Query("DELETE from journal_table")
-    void deleteAll();
-
     @Query("SELECT * from journal_table ORDER BY title ASC")
     LiveData<List<JournalEntry>> getAllEntries();
 }

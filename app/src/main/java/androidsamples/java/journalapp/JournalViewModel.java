@@ -1,7 +1,6 @@
 package androidsamples.java.journalapp;
 
 import java.util.List;
-import java.util.UUID;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
