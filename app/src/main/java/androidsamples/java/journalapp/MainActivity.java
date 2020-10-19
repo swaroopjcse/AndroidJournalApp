@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void launchAddEntryActivity(View view) {
-        Intent intent = new Intent(this, AddEntry.class);
+        Intent intent = new Intent(this, AddEntryActivity.class);
         Log.d(TAG, "Launching Add Entry");
         startActivityForResult(intent, ADD_ENTRY_REQUEST_CODE);
     }
@@ -46,9 +46,9 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ADD_ENTRY_REQUEST_CODE && resultCode == RESULT_OK) {
             if (data != null) {
-                String title = data.getStringExtra(AddEntry.KEY_TITLE);
+                String title = data.getStringExtra(AddEntryActivity.KEY_TITLE);
                 Log.d(TAG, "Title: " + title);
-                int duration = data.getIntExtra(AddEntry.KEY_DURATION, 0);
+                int duration = data.getIntExtra(AddEntryActivity.KEY_DURATION, 0);
                 Log.d(TAG, "Duration: " + duration);
                 mJournalViewModel.insert(new JournalEntry(title, duration));
             }

@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-public class AddEntry extends AppCompatActivity {
+public class AddEntryActivity extends AppCompatActivity {
     private static final String TAG = "AddEntry";
     static final String KEY_TITLE = "KEY_TITLE";
     static final String KEY_DURATION = "KEY_DURATION";
