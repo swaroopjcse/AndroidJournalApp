@@ -1,25 +1,20 @@
 package androidsamples.java.journalapp;
 
-import android.app.Application;
-
 import java.util.List;
+import java.util.UUID;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
-public class JournalViewModel extends AndroidViewModel {
+public class JournalViewModel extends ViewModel {
     private final JournalRepository mRepository;
-    private final LiveData<List<JournalEntry>> mAllEntries;
 
-    public JournalViewModel(@NonNull Application application) {
-        super(application);
-        mRepository = new JournalRepository(application);
-        mAllEntries = mRepository.getAllEntries();
+    public JournalViewModel() {
+        mRepository = JournalRepository.getInstance();
     }
 
     public LiveData<List<JournalEntry>> getAllEntries() {
-        return mAllEntries;
+        return mRepository.getAllEntries();
     }
 
     public void insert(JournalEntry entry) {
