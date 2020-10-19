@@ -1,28 +1,43 @@
 package androidsamples.java.journalapp;
 
-import android.app.Application;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Room;
 
 public class JournalRepository {
-    private JournalEntryDao mJournalEntryDao;
-    private LiveData<List<JournalEntry>> mAllEntries;
+    private static final String DATABASE_NAME = "journal_table";
+    private final JournalEntryDao mJournalEntryDao;
 
-    public JournalRepository(Application application) {
-        JournalRoomDatabase db = JournalRoomDatabase.getDatabase(application);
+    private static JournalRepository sInstance;
+
+    public JournalRepository(Context context) {
+        JournalRoomDatabase db = Room.databaseBuilder(context.getApplicationContext(),
+                JournalRoomDatabase.class,
+                DATABASE_NAME).build();
         mJournalEntryDao = db.journalEntryDao();
-        mAllEntries = mJournalEntryDao.getAllEntries();
     }
 
-    public LiveData<List<JournalEntry>> getAllEntries() {
-        return mAllEntries;
+    public static void init(Context context) {
+        if (sInstance == null)
+            sInstance = new JournalRepository(context);
+    }
+
+    public static JournalRepository getInstance() {
+        if (sInstance == null)
+            throw new IllegalStateException("JournalRepository must be initialized");
+        return sInstance;
     }
 
     public void insert(JournalEntry entry) {
         new insertAsyncTask(mJournalEntryDao).execute(entry);
+    }
+
+    public LiveData<List<JournalEntry>> getAllEntries() {
+        return mJournalEntryDao.getAllEntries();
     }
 
     private static class insertAsyncTask extends AsyncTask<JournalEntry, Void, Void> {

@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey;
 public class JournalEntry {
     @PrimaryKey
     @NonNull
-    private final String mUid;
+    private final UUID mUid;
 
     @ColumnInfo(name = "title")
     private String mTitle;
@@ -20,19 +20,21 @@ public class JournalEntry {
     private int mDuration;
 
     public JournalEntry(@NonNull String title, int duration) {
-        mUid = UUID.randomUUID().toString();
+        mUid = UUID.randomUUID();
         mTitle = title;
         mDuration = duration;
     }
 
+    // getters and setters
     @NonNull
-    public String getUid() {
+    public UUID getUid() {
         return mUid;
     }
 
-    void setUid(String uid) {
+    public void setUid(UUID id) {
     }
 
+    @NonNull
     public String title() {
         return mTitle;
     }
