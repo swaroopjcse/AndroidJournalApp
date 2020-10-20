@@ -40,6 +40,10 @@ public class JournalRepository {
         mExecutor.execute(() -> mJournalEntryDao.insert(entry));
     }
 
+    public void update(JournalEntry entry) {
+        mExecutor.execute(() -> mJournalEntryDao.update(entry));
+    }
+
     public LiveData<List<JournalEntry>> getAllEntries() {
         return mJournalEntryDao.getAllEntries();
     }

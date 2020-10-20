@@ -1,6 +1,5 @@
 package androidsamples.java.journalapp;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,6 +44,9 @@ public class JournalEntryFragment extends Fragment {
 
         mBtnSave.setOnClickListener((v) -> {
             Log.d(TAG, "Save button clicked");
+            mEntry.setTitle(mEditTitle.getText().toString());
+            mEntry.setDuration(Integer.parseInt(mEditDuration.getText().toString()));
+            mEntryDetailsViewModel.saveEntry(mEntry);
         });
 
         return view;

@@ -28,4 +28,9 @@ public class EntryDetailsViewModel extends ViewModel {
         Log.d(TAG, "loading entry: " + entryId);
         entryIdLiveData.setValue(entryId);
     }
+
+    void saveEntry(JournalEntry entry) {
+        Log.d(TAG, "Saving entry: " + entry.getUid());
+        mRepository.update(entry);
+    }
 }
