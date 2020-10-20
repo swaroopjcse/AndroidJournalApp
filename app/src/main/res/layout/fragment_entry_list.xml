@@ -23,7 +23,6 @@
         android:clickable="true"
         android:contentDescription="@string/add_entry"
         android:focusable="true"
-        android:onClick="launchAddEntryActivity"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />
