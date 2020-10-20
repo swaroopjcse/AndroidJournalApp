@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.UUID;
@@ -18,7 +17,6 @@ import androidx.lifecycle.ViewModelProvider;
 public class JournalEntryFragment extends Fragment {
     private static final String TAG = "JournalEntryFragment";
     private EditText mEditTitle, mEditDuration;
-    private Button mBtnSave;
     private EntryDetailsViewModel mEntryDetailsViewModel;
     private JournalEntry mEntry;
 
@@ -40,14 +38,8 @@ public class JournalEntryFragment extends Fragment {
         View view = inflater.inflate(R.layout.journal_entry_detail, container, false);
         mEditTitle = view.findViewById(R.id.edit_title);
         mEditDuration = view.findViewById(R.id.edit_duration);
-        mBtnSave = view.findViewById(R.id.btn_save);
 
-        mBtnSave.setOnClickListener((v) -> {
-            Log.d(TAG, "Save button clicked");
-            mEntry.setTitle(mEditTitle.getText().toString());
-            mEntry.setDuration(Integer.parseInt(mEditDuration.getText().toString()));
-            mEntryDetailsViewModel.saveEntry(mEntry);
-        });
+        view.findViewById(R.id.btn_save).setOnClickListener(this::saveEntry);
 
         return view;
     }
@@ -65,5 +57,14 @@ public class JournalEntryFragment extends Fragment {
     private void updateUI() {
         mEditTitle.setText(mEntry.title());
         mEditDuration.setText(Helper.toLocalizedString(mEntry.duration()));
+    }
+
+    private void saveEntry(View v) {
+        Log.d(TAG, "Save button clicked");
+        mEntry.setTitle(mEditTitle.getText().toString());
+        mEntry.setDuration(Integer.parseInt(mEditDuration.getText().toString()));
+        mEntryDetailsViewModel.saveEntry(mEntry);
+
+        getActivity().onBackPressed();
     }
 }
