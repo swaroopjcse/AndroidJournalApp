@@ -1,5 +1,6 @@
 package androidsamples.java.journalapp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,19 +9,30 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.UUID;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 public class JournalEntryFragment extends Fragment {
     private static final String TAG = "JournalEntryFragment";
     private EditText mEditTitle, mEditDuration;
     private Button mBtnSave;
+    private EntryDetailsViewModel mEntryDetailsViewModel;
+    private JournalEntry mEntry;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // view is not inflated here
+
+        mEntryDetailsViewModel = new ViewModelProvider(getActivity()).get(EntryDetailsViewModel.class);
+
+        UUID entryId = (UUID) getArguments().getSerializable(MainActivity.KEY_ENTRY_ID);
+        Log.d(TAG, "Loading entry: " + entryId);
+
+        mEntryDetailsViewModel.loadEntry(entryId);
     }
 
     @Nullable
@@ -36,5 +48,20 @@ public class JournalEntryFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mEntryDetailsViewModel.getEntryLiveData().observe(getActivity(),
+                entry -> {
+                    this.mEntry = entry;
+                    updateUI();
+                });
+    }
+
+    private void updateUI() {
+        mEditTitle.setText(mEntry.title());
+        mEditDuration.setText(Helper.toLocalizedString(mEntry.duration()));
     }
 }

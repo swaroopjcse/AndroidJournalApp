@@ -1,6 +1,7 @@
 package androidsamples.java.journalapp;
 
 import java.util.List;
+import java.util.UUID;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -14,4 +15,7 @@ public interface JournalEntryDao {
 
     @Query("SELECT * from journal_table ORDER BY title ASC")
     LiveData<List<JournalEntry>> getAllEntries();
+
+    @Query("SELECT * from journal_table WHERE id=(:id)")
+    LiveData<JournalEntry> getEntry(UUID id);
 }

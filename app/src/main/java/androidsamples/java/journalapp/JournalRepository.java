@@ -3,6 +3,7 @@ package androidsamples.java.journalapp;
 import android.content.Context;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -41,5 +42,9 @@ public class JournalRepository {
 
     public LiveData<List<JournalEntry>> getAllEntries() {
         return mJournalEntryDao.getAllEntries();
+    }
+
+    public LiveData<JournalEntry> getEntry(UUID id) {
+        return mJournalEntryDao.getEntry(id);
     }
 }

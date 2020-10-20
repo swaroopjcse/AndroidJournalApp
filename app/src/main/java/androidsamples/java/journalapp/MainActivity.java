@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 
 public class MainActivity extends AppCompatActivity implements EntryListFragment.Callbacks {
     private static final String TAG = "MainActivity";
+     static final String KEY_ENTRY_ID = "KEY_ENTRY_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,13 @@ public class MainActivity extends AppCompatActivity implements EntryListFragment
     @Override
     public void onEntrySelected(UUID entryId) {
         Log.d(TAG, "Entry selected: " + entryId);
+
+        Bundle args = new Bundle();
+        args.putSerializable(KEY_ENTRY_ID, entryId);
+
         Fragment fragment = new JournalEntryFragment();
+        fragment.setArguments(args);
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment)
