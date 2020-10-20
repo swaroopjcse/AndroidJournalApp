@@ -1,17 +1,15 @@
 package androidsamples.java.journalapp;
 
-import androidx.annotation.Nullable;
+import android.os.Bundle;
+import android.util.Log;
+
+import java.util.UUID;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EntryListFragment.Callbacks {
     private static final String TAG = "MainActivity";
-    private static final int ADD_ENTRY_REQUEST_CODE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,5 +24,15 @@ public class MainActivity extends AppCompatActivity {
                     .add(R.id.fragment_container, fragment)
                     .commit();
         }
+    }
+
+    @Override
+    public void onEntrySelected(UUID entryId) {
+        Log.d(TAG, "Entry selected: " + entryId);
+        Fragment fragment = new JournalEntryFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
     }
 }

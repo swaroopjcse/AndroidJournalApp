@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
+import java.util.UUID;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,12 @@ import androidx.recyclerview.widget.RecyclerView;
 public class EntryListFragment extends Fragment {
     private static final String TAG = "EntryListFragment";
     private EntryListViewModel mEntryListViewModel;
+
+    interface Callbacks {
+        void onEntrySelected(UUID id);
+    }
+
+    private Callbacks mCallbacks = null;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,7 +57,20 @@ public class EntryListFragment extends Fragment {
         Log.d(TAG, "launchAddEntryActivity");
     }
 
-    private static class EntryViewHolder extends RecyclerView.ViewHolder {
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
+
+    private class EntryViewHolder extends RecyclerView.ViewHolder {
         private final TextView mTxtTitle;
         private final TextView mTxtDuration;
         private JournalEntry mEntry;
@@ -67,6 +87,7 @@ public class EntryListFragment extends Fragment {
 
         private void launchJournalEntryFragment(View v) {
             Log.d(TAG, "launchJournalEntryFragment with Entry: " + mEntry.title());
+            mCallbacks.onEntrySelected(mEntry.getUid());
         }
 
         void bind(JournalEntry entry) {
@@ -76,7 +97,7 @@ public class EntryListFragment extends Fragment {
         }
     }
 
-    private static class EntryListAdapter extends RecyclerView.Adapter<EntryViewHolder> {
+    private class EntryListAdapter extends RecyclerView.Adapter<EntryViewHolder> {
         private final LayoutInflater mInflater;
         private List<JournalEntry> mEntries;
 
