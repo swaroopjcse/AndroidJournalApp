@@ -53,12 +53,20 @@ public class EntryListFragment extends Fragment {
     private static class EntryViewHolder extends RecyclerView.ViewHolder {
         private final TextView mTxtTitle;
         private final TextView mTxtDuration;
+        private JournalEntry mEntry;
+
 
         public EntryViewHolder(@NonNull View itemView) {
             super(itemView);
 
             mTxtTitle = itemView.findViewById(R.id.txt_item_title);
             mTxtDuration = itemView.findViewById(R.id.txt_item_duration);
+        }
+
+        void bind(JournalEntry entry) {
+            mEntry = entry;
+            this.mTxtTitle.setText(mEntry.title());
+            this.mTxtDuration.setText(Helper.toLocalizedString(mEntry.duration()));
         }
     }
 
@@ -81,8 +89,7 @@ public class EntryListFragment extends Fragment {
         public void onBindViewHolder(@NonNull EntryViewHolder holder, int position) {
             if (mEntries != null) {
                 JournalEntry current = mEntries.get(position);
-                holder.mTxtTitle.setText(current.title());
-                holder.mTxtDuration.setText(Helper.toLocalizedString(current.duration()));
+                holder.bind(current);
             }
         }
 
