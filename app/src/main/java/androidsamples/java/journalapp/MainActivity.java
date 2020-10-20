@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements EntryListFragment
 
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         if (currentFragment == null) {
-            Fragment fragment = new EntryListFragment(); //JournalEntryFragment();
+            Fragment fragment = new EntryListFragment(); //EntryDetailsFragment();
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.fragment_container, fragment)
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements EntryListFragment
         Bundle args = new Bundle();
         args.putSerializable(KEY_ENTRY_ID, entryId);
 
-        Fragment fragment = new JournalEntryFragment();
+        Fragment fragment = new EntryDetailsFragment();
         fragment.setArguments(args);
 
         getSupportFragmentManager()

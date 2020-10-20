@@ -14,8 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-public class JournalEntryFragment extends Fragment {
-    private static final String TAG = "JournalEntryFragment";
+public class EntryDetailsFragment extends Fragment {
+    private static final String TAG = "EntryDetailsFragment";
     private EditText mEditTitle, mEditDuration;
     private EntryDetailsViewModel mEntryDetailsViewModel;
     private JournalEntry mEntry;
