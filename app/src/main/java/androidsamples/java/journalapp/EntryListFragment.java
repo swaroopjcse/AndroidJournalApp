@@ -41,7 +41,7 @@ public class EntryListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_entry_list, container, false);
         FloatingActionButton fab = view.findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(this::launchAddEntryActivity);
+        fab.setOnClickListener(this::addNewEntry);
 
         RecyclerView entriesList = view.findViewById(R.id.recyclerView);
         entriesList.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -53,8 +53,10 @@ public class EntryListFragment extends Fragment {
         return view;
     }
 
-    public void launchAddEntryActivity(View view) {
-        Log.d(TAG, "launchAddEntryActivity");
+    public void addNewEntry(View view) {
+        JournalEntry entry = new JournalEntry("", 0);
+        mEntryListViewModel.insert(entry);
+        mCallbacks.onEntrySelected(entry.getUid());
     }
 
 
