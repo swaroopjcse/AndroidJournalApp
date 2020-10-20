@@ -15,14 +15,13 @@ public class JournalRepository {
     private static JournalRepository sInstance;
 
     private final JournalEntryDao mJournalEntryDao;
-    private final Executor mExecutor;
+    private final Executor mExecutor = Executors.newSingleThreadExecutor();
 
-    public JournalRepository(Context context) {
+    private JournalRepository(Context context) {
         JournalRoomDatabase db = Room.databaseBuilder(context.getApplicationContext(),
                 JournalRoomDatabase.class,
                 DATABASE_NAME).build();
         mJournalEntryDao = db.journalEntryDao();
-        mExecutor = Executors.newSingleThreadExecutor();
     }
 
     public static void init(Context context) {
