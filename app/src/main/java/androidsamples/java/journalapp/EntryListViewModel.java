@@ -5,10 +5,10 @@ import java.util.List;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-public class JournalViewModel extends ViewModel {
+public class EntryListViewModel extends ViewModel {
     private final JournalRepository mRepository;
 
-    public JournalViewModel() {
+    public EntryListViewModel() {
         mRepository = JournalRepository.getInstance();
     }
 
