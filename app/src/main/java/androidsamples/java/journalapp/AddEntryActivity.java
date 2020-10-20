@@ -16,7 +16,7 @@ public class AddEntryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_entry);
+        setContentView(R.layout.journal_entry_detail);
     }
 
     public void saveEntry(View view) {
