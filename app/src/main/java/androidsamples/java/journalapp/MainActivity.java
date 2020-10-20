@@ -2,16 +2,12 @@ package androidsamples.java.journalapp;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -24,13 +20,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        JournalEntryListAdapter adapter = new JournalEntryListAdapter(this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+//        JournalEntryListAdapter adapter = new JournalEntryListAdapter(this);
+//        recyclerView.setAdapter(adapter);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//
+//        mJournalViewModel = new ViewModelProvider(this).get(JournalViewModel.class);
+//        mJournalViewModel.getAllEntries().observe(this, (List<JournalEntry> entries) -> adapter.setEntries(entries));
 
-        mJournalViewModel = new ViewModelProvider(this).get(JournalViewModel.class);
-        mJournalViewModel.getAllEntries().observe(this, (List<JournalEntry> entries) -> adapter.setEntries(entries));
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (currentFragment==null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.fragment_container, fragment)
+                    .commit();
+        }
     }
 
     public void launchAddEntryActivity(View view) {
