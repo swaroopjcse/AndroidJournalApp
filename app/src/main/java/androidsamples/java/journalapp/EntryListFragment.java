@@ -61,6 +61,12 @@ public class EntryListFragment extends Fragment {
 
             mTxtTitle = itemView.findViewById(R.id.txt_item_title);
             mTxtDuration = itemView.findViewById(R.id.txt_item_duration);
+
+            itemView.setOnClickListener(this::launchJournalEntryFragment);
+        }
+
+        private void launchJournalEntryFragment(View v) {
+            Log.d(TAG, "launchJournalEntryFragment with Entry: " + mEntry.title());
         }
 
         void bind(JournalEntry entry) {
