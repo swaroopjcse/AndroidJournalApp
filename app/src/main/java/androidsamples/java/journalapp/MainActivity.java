@@ -29,9 +29,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mJournalViewModel = new ViewModelProvider(this,
-                new ViewModelProvider.AndroidViewModelFactory(getApplication()))
-                .get(JournalViewModel.class);
+        mJournalViewModel = new ViewModelProvider(this).get(JournalViewModel.class);
         mJournalViewModel.getAllEntries().observe(this, (List<JournalEntry> entries) -> adapter.setEntries(entries));
     }
 
