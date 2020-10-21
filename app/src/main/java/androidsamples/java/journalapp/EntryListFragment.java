@@ -4,6 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -34,6 +37,7 @@ public class EntryListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mEntryListViewModel = new ViewModelProvider(this).get(EntryListViewModel.class);
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -70,6 +74,21 @@ public class EntryListFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mCallbacks = null;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_entry_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu_info) {
+            new InfoDialogFragment().show(this.getFragmentManager(), "INFO");
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private class EntryViewHolder extends RecyclerView.ViewHolder {

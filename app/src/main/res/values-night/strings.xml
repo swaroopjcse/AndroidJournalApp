@@ -6,4 +6,7 @@
     <string name="duration_label">Duration</string>
     <string name="save_label">Save</string>
     <string name="duration_hint">minutes</string>
+    <string name="info">Info</string>
+    <string name="ok">OK</string>
+    <string name="app_info">This app allows users to record their day to day activities. It uses the Room database and Architecture components.</string>
 </resources>
