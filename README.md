@@ -3,6 +3,7 @@
 This app allows users to record their day to day activities. It is developed for teaching the following aspects of Android app development:
 
 - Room database library
+- Recycler View
 - Fragments
 - Tool bar action buttons
 - Dialogs
